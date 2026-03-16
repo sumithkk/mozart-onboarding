@@ -1,0 +1,20 @@
+{
+  "functions": {
+    "source": ".output/server",
+    "runtime": "nodejs20",
+    "serviceAccount": "mozart-6c3e0@appspot.gserviceaccount.com"
+  },
+  "hosting": [
+    {
+      "target": "nuxtapp",
+      "public": ".output/public",
+      "cleanUrls": true,
+      "rewrites": [
+        {
+          "source": "**",
+          "function": "frontendFunction"
+        }
+      ]
+    }
+  ]
+}

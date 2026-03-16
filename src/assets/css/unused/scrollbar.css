@@ -1,0 +1,25 @@
+/* assets/styles/scrollbar.css */
+::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 1rem;
+    background: transparent;
+    border: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 1rem;
+    background: var(--strokeColor);
+    border: 1px solid var(--strokeColor);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--strokeColor);
+}
+
+::-webkit-scrollbar-thumb:active {
+    background: var(--strokeColor)
+}

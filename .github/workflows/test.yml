@@ -1,0 +1,126 @@
+name: Test Suite
+
+on:
+    pull_request:
+        branches:
+            - development
+
+jobs:
+  unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    environment: test
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run unit tests
+        run: npm run test
+        env:
+          # Application environment variables
+          SERVER_API_URL: ${{ secrets.SERVER_API_URL }}
+          SERVER_API_KEY: ${{ secrets.SERVER_API_KEY }}
+          RAG_API_URL: ${{ secrets.RAG_API_URL }}
+          RAG_LOCAL_API_URL: ${{ secrets.RAG_LOCAL_API_URL }}
+          CLIENT_URL: ${{ secrets.CLIENT_URL }}
+          RAG_ENV: ${{ secrets.RAG_ENV }}
+          RAG_SERVICE_URL: ${{ secrets.RAG_SERVICE_URL }}
+          GOOGLE_AUTH_CLIENT_ID: ${{ secrets.GOOGLE_AUTH_CLIENT_ID }}
+          PLATFORM: ${{ secrets.PLATFORM }}
+          ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
+          GOOGLE_DEVELOPER_KEY: ${{ secrets.GOOGLE_DEVELOPER_KEY }}
+          HOST_URL: ${{ secrets.HOST_URL }}
+
+
+  e2e-tests:
+    name: E2E Tests
+    runs-on: ubuntu-latest
+    environment: test
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      - name: Restore Google session from secret
+        run: |
+          mkdir -p storage
+          echo "${{ secrets.TEST_USER_JSON_B64 }}" | base64 -d > storage/google.json
+          echo "✅ google.json restored"
+          echo "📦 Checking contents:"
+          ls -lh storage/google.json
+          head -n 10 storage/google.json || echo "❌ google.json is empty or corrupted"  
+
+      - name: Run E2E tests
+        run: npm run test:e2e
+        env:
+          # Application environment variables
+          SERVER_API_URL: ${{ secrets.SERVER_API_URL }}
+          SERVER_API_KEY: ${{ secrets.SERVER_API_KEY }}
+          RAG_API_URL: ${{ secrets.RAG_API_URL }}
+          RAG_LOCAL_API_URL: ${{ secrets.RAG_LOCAL_API_URL }}
+          CLIENT_URL: ${{ secrets.CLIENT_URL }}
+          RAG_ENV: ${{ secrets.RAG_ENV }}
+          RAG_SERVICE_URL: ${{ secrets.RAG_SERVICE_URL }}
+          GOOGLE_AUTH_CLIENT_ID: ${{ secrets.GOOGLE_AUTH_CLIENT_ID }}
+          PLATFORM: ${{ secrets.PLATFORM }}
+          ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
+          GOOGLE_DEVELOPER_KEY: ${{ secrets.GOOGLE_DEVELOPER_KEY }}
+          HOST_URL: ${{ secrets.HOST_URL }}
+          
+          # Test-specific environment variables
+          TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
+          TEST_USER_EMAIL_PASSWORD: ${{ secrets.TEST_USER_EMAIL_PASSWORD }}
+          TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
+          TEST_USER_USERNAME: ${{ secrets.TEST_USER_USERNAME }}
+
+      - name: Upload E2E test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: e2e-test-results
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 14
+
+
+  test-summary:
+    name: Test Summary
+    needs: [unit-tests, e2e-tests]
+    runs-on: ubuntu-latest
+    if: always()
+    
+    steps:
+      - name: Test Results Summary
+        run: |
+          echo "## Test Results Summary" >> $GITHUB_STEP_SUMMARY
+          echo "- Unit Tests: ${{ needs.unit-tests.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- E2E Tests: ${{ needs.e2e-tests.result }}" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "${{ needs.unit-tests.result }}" = "success" ] && [ "${{ needs.e2e-tests.result }}" = "success" ]; then
+            echo "✅ All tests passed!" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ Some tests failed. Please check the logs above." >> $GITHUB_STEP_SUMMARY
+          fi 

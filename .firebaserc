@@ -1,0 +1,42 @@
+{
+  "projects": {
+    "staging": "mozart-staging-e22d8",
+    "development": "mozart-devs",
+    "production": "mozart-6c3e0"
+  },
+  "targets": {
+    "mozart-devs": {
+      "hosting": {
+        "nuxtapp": [
+          "mozart-devs"
+        ]
+      }
+    },
+    "mozart-staging-e22d8": {
+      "hosting": {
+        "nuxtapp": [
+          "mozart-staging-e22d8"
+        ]
+      }
+    },
+    "mozart-6c3e0": {
+      "hosting": {
+        "nuxtapp": [
+          "mozart-6c3e0"
+        ]
+      }
+    }
+  },
+  "etags": {
+    "mozart-devs": {
+      "extensionInstances": {}
+    },
+    "mozart-staging-e22d8": {
+      "extensionInstances": {}
+    },
+    "mozart-6c3e0": {
+      "extensionInstances": {}
+    }
+  },
+  "dataconnectEmulatorConfig": {}
+}

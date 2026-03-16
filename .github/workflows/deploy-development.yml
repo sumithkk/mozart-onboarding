@@ -1,0 +1,230 @@
+name: Development Deployment to Firebase
+
+
+on:
+    push:
+        branches:
+            - development
+
+jobs:
+    # Check if tests should be skipped
+    check-skip-tests:
+        name: Check Skip Tests
+        runs-on: ubuntu-latest
+        outputs:
+            skip-tests: ${{ steps.check.outputs.skip-tests }}
+        steps:
+            - name: Check commit message for test skip
+              id: check
+              env:
+                  COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+              run: |
+                  echo "Commit message:"
+                  echo "$COMMIT_MESSAGE"
+
+                  if printf '%s' "$COMMIT_MESSAGE" | grep -E '\[skip tests\]|\[deploy-only\]|\[no tests\]'; then
+                    echo "skip-tests=true" >> "$GITHUB_OUTPUT"
+                    echo "🚀 Tests will be SKIPPED for this deployment"
+                  else
+                    echo "skip-tests=false" >> "$GITHUB_OUTPUT"
+                    echo "✅ Tests will run normally"
+                  fi
+
+    # Unit Tests Job
+    unit-tests:
+        name: Unit Tests
+        runs-on: ubuntu-latest
+        environment: development
+        needs: check-skip-tests
+        if: needs.check-skip-tests.outputs.skip-tests == 'false'
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "20"
+                  cache: "npm"
+
+            - name: Install dependencies
+              run: npm install
+
+            - name: Run unit tests
+              run: npm run test
+              env:
+                  # Application environment variables
+                  SERVER_API_URL: ${{ secrets.SERVER_API_URL }}
+                  SERVER_API_KEY: ${{ secrets.SERVER_API_KEY }}
+                  RAG_API_URL: ${{ secrets.RAG_API_URL }}
+                  RAG_LOCAL_API_URL: ${{ secrets.RAG_LOCAL_API_URL }}
+                  CLIENT_URL: ${{ secrets.CLIENT_URL }}
+                  RAG_ENV: ${{ secrets.RAG_ENV }}
+                  RAG_SERVICE_URL: ${{ secrets.RAG_SERVICE_URL }}
+                  GOOGLE_AUTH_CLIENT_ID: ${{ secrets.GOOGLE_AUTH_CLIENT_ID }}
+                  PLATFORM: ${{ secrets.PLATFORM }}
+                  ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
+                  GOOGLE_DEVELOPER_KEY: ${{ secrets.GOOGLE_DEVELOPER_KEY }}
+                  HOST_URL: ${{ secrets.HOST_URL }}
+
+    # E2E Tests Job
+    e2e-tests:
+        name: E2E Tests
+        runs-on: ubuntu-latest
+        environment: development
+        needs: check-skip-tests
+        if: needs.check-skip-tests.outputs.skip-tests == 'false'
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "20"
+                  cache: "npm"
+
+            - name: Install dependencies
+              run: npm install
+
+            - name: Install Playwright browsers
+              run: npx playwright install --with-deps
+
+            - name: Restore Google session from secret
+              run: |
+                  mkdir -p storage
+                  echo "${{ secrets.TEST_USER_JSON_B64 }}" | base64 -d > storage/google.json
+                  echo "✅ google.json restored"
+                  echo "📦 Checking contents:"
+                  ls -lh storage/google.json
+                  head -n 10 storage/google.json || echo "❌ google.json is empty or corrupted"
+
+            - name: Run E2E tests
+              run: npm run test:e2e
+              env:
+                  # Application environment variables
+                  SERVER_API_URL: ${{ secrets.SERVER_API_URL }}
+                  SERVER_API_KEY: ${{ secrets.SERVER_API_KEY }}
+                  RAG_API_URL: ${{ secrets.RAG_API_URL }}
+                  RAG_LOCAL_API_URL: ${{ secrets.RAG_LOCAL_API_URL }}
+                  CLIENT_URL: ${{ secrets.CLIENT_URL }}
+                  RAG_ENV: ${{ secrets.RAG_ENV }}
+                  RAG_SERVICE_URL: ${{ secrets.RAG_SERVICE_URL }}
+                  GOOGLE_AUTH_CLIENT_ID: ${{ secrets.GOOGLE_AUTH_CLIENT_ID }}
+                  PLATFORM: ${{ secrets.PLATFORM }}
+                  ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
+                  GOOGLE_DEVELOPER_KEY: ${{ secrets.GOOGLE_DEVELOPER_KEY }}
+                  HOST_URL: ${{ secrets.HOST_URL }}
+
+                  # Test-specific environment variables
+                  TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
+                  TEST_USER_EMAIL_PASSWORD: ${{ secrets.TEST_USER_EMAIL_PASSWORD }}
+                  TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
+                  TEST_USER_USERNAME: ${{ secrets.TEST_USER_USERNAME }}
+
+            - name: Upload E2E test results
+              uses: actions/upload-artifact@v4
+              if: always()
+              with:
+                  name: e2e-test-results
+                  path: |
+                      test-results/
+                      playwright-report/
+                  retention-days: 14
+
+    # Firebase Deployment Job
+    firebase-deployment:
+        name: Firebase Deployment
+        runs-on: ubuntu-latest
+        environment: development
+        needs: [check-skip-tests, unit-tests, e2e-tests]
+        if: always() && (needs.check-skip-tests.outputs.skip-tests == 'true' || (needs.unit-tests.result == 'success' && needs.e2e-tests.result == 'success'))
+
+        steps:
+            - name: Display deployment reason
+              run: |
+                  if [[ "${{ needs.check-skip-tests.outputs.skip-tests }}" == "true" ]]; then
+                    echo "🚀 Deploying with SKIPPED TESTS (commit message bypass)"
+                  else
+                    echo "✅ Deploying after successful test completion"
+                  fi
+
+            - name: Checkout Repository
+              uses: actions/checkout@v4
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "20"
+
+            - name: Install Dependencies
+              run: npm install
+
+            - name: Install Firebase Tools
+              run: npm install -g firebase-tools
+
+            - name: Set Environment Specific Variables and Secrets
+              env:
+                  SERVER_API_URL: ${{ secrets.SERVER_API_URL }}
+                  SERVER_API_KEY: ${{ secrets.SERVER_API_KEY }}
+                  RAG_API_URL: ${{ secrets.RAG_API_URL }}
+                  RAG_LOCAL_API_URL: ${{ secrets.RAG_LOCAL_API_URL }}
+                  CLIENT_URL: ${{ secrets.CLIENT_URL }}
+                  RAG_ENV: ${{ secrets.RAG_ENV }}
+                  RAG_SERVICE_URL: ${{ secrets.RAG_SERVICE_URL }}
+                  GOOGLE_AUTH_CLIENT_ID: ${{ secrets.GOOGLE_AUTH_CLIENT_ID }}
+                  PLATFORM: ${{ secrets.PLATFORM }}
+                  ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
+                  GOOGLE_DEVELOPER_KEY: ${{ secrets.GOOGLE_DEVELOPER_KEY }}
+              run: |
+                  echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}' > firebaseKeys.json
+                  npm run build
+
+            - name: Prepare Server for Deployment
+              run: |
+                  cd .output/server
+                  rm -rf node_modules
+                  npm install
+                  cd ..
+
+            - name: Use Environment Specific Firebase Config
+              run: cp firebase.development.json firebase.json
+
+            - name: Build and Deploy to Firebase
+              run: |
+                  echo "Deploying to Firebase with project ID: ${{ secrets.FIREBASE_PROJECT_ID }}"
+                  export GOOGLE_APPLICATION_CREDENTIALS=firebaseKeys.json
+                  firebase use development
+                  npx firebase deploy --only hosting:nuxtapp,functions:frontendFunction --project "${{ secrets.FIREBASE_PROJECT_ID }}" --force
+
+    # Deployment Summary
+    deployment-summary:
+        name: Deployment Summary
+        needs: [check-skip-tests, unit-tests, e2e-tests, firebase-deployment]
+        runs-on: ubuntu-latest
+        timeout-minutes: 5
+        if: always() && (needs.unit-tests.result != 'cancelled' || needs.e2e-tests.result != 'cancelled' || needs.firebase-deployment.result != 'cancelled')
+
+        steps:
+            - name: Deployment Results Summary
+              timeout-minutes: 2
+              run: |
+                  echo "## Deployment Results Summary" >> $GITHUB_STEP_SUMMARY
+
+                  if [[ "${{ needs.check-skip-tests.outputs.skip-tests }}" == "true" ]]; then
+                    echo "- Tests: **SKIPPED** (commit message bypass)" >> $GITHUB_STEP_SUMMARY
+                    echo "- Firebase Deployment: ${{ needs.firebase-deployment.result }}" >> $GITHUB_STEP_SUMMARY
+                    echo "🚀 **Tests were bypassed for this deployment!**" >> $GITHUB_STEP_SUMMARY
+                  else
+                    echo "- Unit Tests: ${{ needs.unit-tests.result }}" >> $GITHUB_STEP_SUMMARY
+                    echo "- E2E Tests: ${{ needs.e2e-tests.result }}" >> $GITHUB_STEP_SUMMARY
+                    echo "- Firebase Deployment: ${{ needs.firebase-deployment.result }}" >> $GITHUB_STEP_SUMMARY
+                  fi
+
+                  if [ "${{ needs.firebase-deployment.result }}" = "success" ]; then
+                    echo "✅ Deployment successful!" >> $GITHUB_STEP_SUMMARY
+                  else
+                    echo "❌ Deployment failed. Please check the logs above." >> $GITHUB_STEP_SUMMARY
+                  fi

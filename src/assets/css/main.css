@@ -1,0 +1,1127 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+/* Import markdown styles */
+@import "./markdown.css";
+
+/* 🧱 Base theme values for light and dark mode */
+@layer base {
+    :root {
+        --logoColor: #2844a4;
+        --background: 0 0% 96%;
+        --foreground: 0 0% 5%;
+        --card: 0 0% 100%;
+        --card-foreground: 0 0% 5%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 0 0% 5%;
+        --primary: 225 58% 40%;
+        --primary-foreground: 0 0% 100%;
+        --secondary: 0 0% 96%;
+        --secondary-foreground: 0 0% 5%;
+        --muted: 0 0% 96%;
+        --muted-foreground: 0 0% 37%;
+        --accent: 225 58% 40%;
+        --accent-foreground: 0 0% 100%;
+        --destructive: 0 85% 60%;
+        --destructive-foreground: 0 0% 100%;
+        --border: 0 0% 89%;
+        --input: 0 0% 100%;
+        --ring: 225 58% 40%;
+        --chart-1: 225 58% 40%;
+        --chart-2: 0 0% 37%;
+        --chart-3: 0 0% 77%;
+        --chart-4: 0 0% 89%;
+        --chart-5: 0 0% 96%;
+        --radius: 0.5rem;
+
+        /* Light Theme - Mozart Color Palette */
+        --headerBackgroundColor: #ffffff;
+        --headerBackgroundLAColor: #2844a4;
+        --headerTextColor: #0d0d0d;
+        --sideBarBackgroundColor: #ffffff;
+        --sideBarTextColor: #0d0d0d;
+        --backgroundColor: #f6f6f6;
+        --unselectedColor: #c4c4c4;
+        --strokeColor: #e4e4e4;
+        --strokeColor2: #c4c4c4;
+        --strokeColorLA: #2844a4;
+        --midGrey: #e4e4e4;
+        --linkColor: #2844a4;
+        --itemColor: #e4e4e4;
+        --gray: #f6f6f6;
+        --gray2: #5e5e5e;
+        --qqq: #5e5e5e;
+        --highlightColor: #2844a4;
+        --navHeaderActive: #0d0d0d;
+        --uploadedFileColor: #f6f6f6;
+        --surfaceColor: #f6f6f6;
+        --placeholderColor: #c4c4c4;
+        --borderColor: #e4e4e4;
+        --textColor: #0d0d0d;
+        --textColorSecondary: #5e5e5e;
+        --sideBarBackgroundColorDark: #f6f6f6;
+        --ringColor: #2844a480;
+        --tableBgHeader: #f6f6f6;
+        
+        /* Light Theme Scrollbar Colors */
+        --scrollbar-thumb-color: #e4e4e4;
+        --scrollbar-thumb-hover-color: #c4c4c4;
+        --scrollbar-thumb-active-color: #5e5e5e;
+    }
+
+    .dark {
+        --logoColor: #2844a4;
+        --background: 0 0% 3%;
+        --foreground: 0 0% 98%;
+        --card: 0 0% 6%;
+        --card-foreground: 0 0% 98%;
+        --popover: 0 0% 6%;
+        --popover-foreground: 0 0% 98%;
+        --primary: 222 100% 65%;
+        --primary-foreground: 0 0% 100%;
+        --secondary: 0 0% 9%;
+        --secondary-foreground: 0 0% 98%;
+        --muted: 0 0% 9%;
+        --muted-foreground: 0 0% 63%;
+        --accent: 200 98% 60%;
+        --accent-foreground: 0 0% 100%;
+        --destructive: 0 70% 40%;
+        --destructive-foreground: 0 0% 100%;
+        --border: 0 0% 12%;
+        --input: 0 0% 9%;
+        --ring: 222 100% 65%;
+        --chart-1: 222 100% 65%;
+        --chart-2: 278 87% 72%;
+        --chart-3: 341 85% 78%;
+        --chart-4: 155 60% 68%;
+        --chart-5: 45 94% 73%;
+
+        /* Dark Theme (from :tailwind.css dark) */
+        --headerBackgroundColor: #2c2c2c;
+        --headerBackgroundLAColor: #2c2c2c;
+        --headerTextColor: #ffffff;
+        --sideBarBackgroundColor: #2c2c2c;
+        --sideBarTextColor: #ffffff;
+        --backgroundColor: #191919;
+        --unselectedColor: #838383;
+        --strokeColor: #383838;
+        --strokeColor2: #525252;
+        --strokeColorLA: #383838;
+        --midGrey: #2d2d2d;
+        --linkColor: #ffffff;
+        --itemColor: #464646;
+        --gray: #212121;
+        --gray2: #5e5e5e;
+        --qqq: #444444;
+        --highlightColor: #ffff00;
+        --navHeaderActive: #ffffff;
+        --uploadedFileColor: #383838;
+        --surfaceColor: #1a1a1a;
+        --placeholderColor: #6b6b6b;
+        --borderColor: #2e2e2e;
+        --textColor: #ffffff;
+        --textColorSecondary: #b3b3b3;
+        --sideBarBackgroundColorDark: #141414;
+        --ringColor: #fff;
+        
+        /* Dark Theme Scrollbar Colors */
+        --scrollbar-thumb-color: #4a4a4a;
+        --scrollbar-thumb-hover-color: #5c5c5c;
+        --scrollbar-thumb-active-color: #6e6e6e;
+        /* --tableBgHeader: #263049ed; */
+        --tableBgHeader: #2844a4;
+    }
+}
+
+:root {
+    --foreground-rgb: 0, 0, 0;
+    --background-start-rgb: 214, 219, 220;
+    --background-end-rgb: 255, 255, 255;
+    --scrollbar-width: 5px;
+    --scrollbar-track-color: transparent;
+    --staticRingColor: #2844a480;
+
+    /* Static values */
+    --sideBarWidth: 260px;
+    --headerHeight: 60px;
+    --logoColor: #2844a4;
+    --primaryColor: #2844a4;
+    --greyBlack: #0d0d0d;
+    --red: #ef4444;
+    --red2: #802a2c;
+    --green: #00b366;
+    --strokeChart: #2844a4;
+    --strokeChart2: #5e5e5e;
+    --darkCharcoal: #0d0d0d;
+
+    /*Neutral - Mozart Palette*/
+    --neutral-50: #ffffff;
+    --neutral-100: #f6f6f6;
+    --neutral-200: #e4e4e4;
+    --neutral-300: #c4c4c4;
+    --neutral-400: #c4c4c4;
+    --neutral-500: #5e5e5e;
+    --neutral-600: #5e5e5e;
+    --neutral-700: #0d0d0d;
+    --neutral-800: #0d0d0d;
+    --neutral-900: #0d0d0d;
+    --neutral-950: #0d0d0d;
+
+    /* Raw gray color values - Mozart Palette */
+    --gray-50: #ffffff;
+    --gray-100: #f6f6f6;
+    --gray-200: #e4e4e4;
+    --gray-300: #c4c4c4;
+    --gray-400: #c4c4c4;
+    --gray-500: #5e5e5e;
+    --gray-600: #5e5e5e;
+    --gray-700: #0d0d0d;
+    --gray-800: #0d0d0d;
+    --gray-900: #0d0d0d;
+    --gray-950: #0d0d0d;
+
+    --indigo-600: #2844a4;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --foreground-rgb: 255, 255, 255;
+        --background-start-rgb: 0, 0, 0;
+        --background-end-rgb: 0, 0, 0;
+    }
+}
+
+@theme {
+    --text-small: 10px;
+    --radius: 0.5rem;
+    --radius-lg: var(--radius);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-sm: calc(var(--radius) - 4px);
+    --color-background: hsl(var(--background));
+    --color-foreground: hsl(var(--foreground));
+    --color-card: hsl(var(--card));
+    --color-card-foreground: hsl(var(--card-foreground));
+    --color-popover: hsl(var(--popover));
+    --color-popover-foreground: hsl(var(--popover-foreground));
+    --color-primary: hsl(var(--primary));
+    --color-primary-foreground: hsl(var(--primary-foreground));
+    --color-secondary: hsl(var(--secondary));
+    --color-secondary-foreground: hsl(var(--secondary-foreground));
+    --color-muted: hsl(var(--muted));
+    --color-muted-foreground: hsl(var(--muted-foreground));
+    --color-accent: hsl(var(--accent));
+    --color-accent-foreground: hsl(var(--accent-foreground));
+    --color-destructive: hsl(var(--destructive));
+    --color-destructive-foreground: hsl(var(--destructive-foreground));
+    --color-border: hsl(var(--border));
+    --color-input: hsl(var(--input));
+    --color-ring: hsl(var(--ring));
+    --color-chart-1: hsl(var(--chart-1));
+    --color-chart-2: hsl(var(--chart-2));
+    --color-chart-3: hsl(var(--chart-3));
+    --color-chart-4: hsl(var(--chart-4));
+    --color-chart-5: hsl(var(--chart-5));
+    --color-logoColor: var(--logoColor);
+    --bg-gradient-radial: radial-gradient(var(--tw-gradient-stops));
+    --bg-gradient-conic: conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops));
+    --animate-accordion-down: accordion-down 0.2s ease-out;
+    --animate-accordion-up: accordion-up 0.2s ease-out;
+    --height-header: var(--headerHeight);
+
+    /* New */
+    --color-primaryColor: var(--primaryColor);
+    --color-greyBlack: var(--greyBlack);
+    --color-red: var(--red);
+    --color-red2: var(--red2);
+    --color-green: var(--green);
+    --color-strokeChart: var(--strokeChart);
+    --color-strokeChart2: var(--strokeChart2);
+    --color-darkCharcoal: var(--darkCharcoal);
+
+    --color-headerBackgroundColor: var(--headerBackgroundColor);
+    --color-headerBackgroundLAColor: var(--headerBackgroundLAColor);
+    --color-headerTextColor: var(--headerTextColor);
+    --color-sideBarBackgroundColor: var(--sideBarBackgroundColor);
+    --color-sideBarTextColor: var(--sideBarTextColor);
+    --color-backgroundColor: var(--backgroundColor);
+    --color-unselectedColor: var(--unselectedColor);
+    --color-strokeColor: var(--strokeColor);
+    --color-strokeColor2: var(--strokeColor2);
+    --color-strokeColorLA: var(--strokeColorLA);
+    --color-midGrey: var(--midGrey);
+    --color-linkColor: var(--linkColor);
+    --color-itemColor: var(--itemColor);
+    --color-gray: var(--gray);
+    --color-gray2: var(--gray2);
+    --color-qqq: var(--qqq);
+    --color-highlightColor: var(--highlightColor);
+    --color-navHeaderActive: var(--navHeaderActive);
+    --color-uploadedFileColor: var(--uploadedFileColor);
+    --color-surfaceColor: var(--surfaceColor);
+    --color-placeholderColor: var(--placeholderColor);
+    --color-borderColor: var(--borderColor);
+    --color-textColor: var(--textColor);
+    --color-textColorSecondary: var(--textColorSecondary);
+    --color-sideBarBackgroundColorDark: var(--sideBarBackgroundColorDark);
+    --color-tableBgHeader: var(--tableBgHeader);
+
+    --color-ringColor: var(--ringColor);
+    --color-staticRingColor: var(--staticRingColor);
+
+    --color-neutral-50: var(--neutral-50);
+    --color-neutral-100: var(--neutral-100);
+    --color-neutral-200: var(--neutral-200);
+    --color-neutral-300: var(--neutral-300);
+    --color-neutral-400: var(--neutral-400);
+    --color-neutral-500: var(--neutral-500);
+    --color-neutral-600: var(--neutral-600);
+    --color-neutral-700: var(--neutral-700);
+    --color-neutral-800: var(--neutral-800);
+    --color-neutral-900: var(--neutral-900);
+    --color-neutral-950: var(--neutral-950);
+
+    --color-gray-100: var(--gray-100);
+    --color-gray-200: var(--gray-200);
+    --color-gray-300: var(--gray-300);
+    --color-gray-400: var(--gray-400);
+    --color-gray-500: var(--gray-500);
+    --color-gray-600: var(--gray-600);
+    --color-gray-700: var(--gray-700);
+    --color-gray-800: var(--gray-800);
+    --color-gray-900: var(--gray-900);
+    --color-gray-950: var(--gray-950);
+
+    --color-indigo-600: var(--indigo-600);
+
+    /* Mozart Brand Colors */
+    --color-mozart-blue: #2844a4;
+    --color-mozart-white: #f6f6f6;
+    --color-mozart-gray: #e4e4e4;
+    --color-mozart-blue-50: rgba(40, 68, 164, 0.05);
+    --color-mozart-blue-100: rgba(40, 68, 164, 0.1);
+    --color-mozart-blue-200: rgba(40, 68, 164, 0.2);
+    --color-mozart-blue-300: rgba(40, 68, 164, 0.3);
+    --color-mozart-blue-400: rgba(40, 68, 164, 0.4);
+    --color-mozart-blue-500: rgba(40, 68, 164, 0.5);
+    --color-mozart-blue-600: #2844a4;
+    --color-mozart-blue-700: #1e3594;
+    --color-mozart-blue-800: #1a2a7a;
+    --color-mozart-blue-900: #151f60;
+
+    @keyframes accordion-down {
+        from {
+            height: 0;
+        }
+        to {
+            height: var(--radix-accordion-content-height);
+        }
+    }
+
+    @keyframes accordion-up {
+        from {
+            height: var(--radix-accordion-content-height);
+        }
+        to {
+            height: 0;
+        }
+    }
+}
+
+@layer utilities {
+    /* the bubble itself */
+    .msg-bubble {
+        @apply overflow-hidden;
+    }
+
+    /* rendered markdown/text inside bubble */
+    .msg-html {
+        @apply max-w-full break-words whitespace-pre-wrap;
+        overflow-wrap: anywhere; /* tailwind arbitrary would also work: [overflow-wrap:anywhere] */
+    }
+
+    /* code blocks: keep formatting, scroll horizontally *inside* bubble */
+    .msg-html pre {
+        @apply max-w-full overflow-x-auto whitespace-pre;
+    }
+
+    /* inline code can wrap to avoid pushing bubble */
+    .msg-html code {
+        @apply break-words whitespace-pre-wrap;
+    }
+
+    /* media never exceeds bubble width */
+    .msg-html img,
+    .msg-html iframe {
+        @apply h-auto max-w-full;
+    }
+}
+
+/* 🎚 Legacy scrollbar variables (keeping for compatibility) */
+/* Note: Modern faded scrollbar styles are defined at the bottom of this file */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0px;
+    font-family:
+        "Helvetica Neue",
+        Helvetica,
+        Arial,
+        sans-serif;
+    background-color: hsl(var(--background));
+}
+
+input,
+textarea {
+    caret-color: hsl(var(--foreground));
+}
+
+.material-icons {
+    font-family: "Material Symbols Outlined";
+    font-variation-settings:
+        "FILL" 1,
+        "wght" 300,
+        "GRAD" 0,
+        "opsz" 24;
+    font-style: normal;
+}
+
+.materialSymbolsFilled {
+    font-family: "Material Symbols Outlined";
+    font-variation-settings:
+        "FILL" 1,
+        "wght" 300,
+        "GRAD" 0,
+        "opsz" 24;
+    font-style: normal;
+}
+
+.materialSymbolsOutlined {
+    font-family: "Material Symbols Outlined";
+    font-variation-settings:
+        "FILL" 0,
+        "wght" 300,
+        "GRAD" 0,
+        "opsz" 24;
+    font-style: normal;
+}
+
+/* Compact variant for smaller material icons */
+.ms-compact {
+    font-size: 12px;
+    line-height: 12px;
+}
+
+.textAlignCenter {
+    text-align: center;
+}
+
+.clickable {
+    cursor: pointer;
+    color: hsl(var(--primary));
+}
+
+.bold {
+    font-weight: bold;
+}
+
+textarea.large {
+    height: 72px;
+}
+
+.textarea {
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: hsl(var(--input));
+    border-color: hsl(var(--border));
+    border-radius: 0;
+    border-width: 1px;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    background-color: transparent;
+    border: none;
+    color: hsl(var(--foreground));
+    font: inherit;
+    width: 100%;
+    resize: none;
+}
+
+.textarea:focus {
+    outline: none;
+}
+
+/* Tooltip container */
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: hsl(var(--muted));
+    color: hsl(var(--muted-foreground));
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -65px;
+    opacity: 0;
+    transition:
+        opacity 0.3s,
+        bottom 0.3s ease-in-out;
+}
+
+/* Tooltip arrow */
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: hsl(var(--muted)) transparent transparent transparent;
+}
+
+/* Show the tooltip text when you hover over the tooltip container */
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+    bottom: 125%;
+}
+
+/* --------------------- GRID -------------------------*/
+.grid2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(20%, 1fr));
+    gap: 1rem;
+}
+
+.gridTwo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+/* Responsive Grid */
+@media (max-width: 768px) {
+    .grid2 {
+        grid-template-columns: repeat(auto-fill, minmax(40%, 1fr));
+    }
+
+    /* Mobile-specific improvements for chat scrolling */
+    .chat-container {
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
+    }
+
+    /* Prevent horizontal scrolling on mobile */
+    body {
+        overflow-x: hidden;
+    }
+
+    /* Improve touch scrolling */
+    * {
+        -webkit-tap-highlight-color: transparent;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .grid2 {
+        grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
+    }
+}
+
+@media (min-width: 1025px) and (max-width: 1200px) {
+    .grid2 {
+        grid-template-columns: repeat(auto-fill, minmax(25%, 1fr));
+    }
+}
+
+@media (min-width: 1201px) {
+    .grid2 {
+        grid-template-columns: repeat(auto-fill, minmax(18%, 1fr));
+    }
+}
+
+/* FONT SIZES */
+.px15 {
+    font-size: 15px;
+}
+.px18 {
+    font-size: 18px;
+}
+
+.px20 {
+    font-size: 20px;
+}
+
+.px24 {
+    font-size: 24px;
+}
+
+.px28 {
+    font-size: 28px;
+}
+
+.bold {
+    font-weight: 800;
+}
+
+/* Margins  */
+.mrg-left-right-2 {
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+/*  Width and Height */
+.fullWidth {
+    width: -webkit-fill-available;
+    width: stretch;
+    width: 100%;
+}
+
+.fullHeight {
+    height: -webkit-fill-available;
+    height: stretch;
+    height: 100%;
+}
+
+.fadeText {
+    opacity: 0;
+    animation: fadeInEffect 1s forwards;
+}
+
+@keyframes fadeInEffect {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.visible {
+    visibility: visible;
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+/* helpers */
+.displayFlex {
+    display: flex;
+}
+
+.flexDirectionColumn {
+    flex-direction: column;
+}
+
+.gap10px {
+    gap: 10px;
+}
+.gap1 {
+    gap: 1rem;
+}
+
+.center {
+    justify-content: center;
+    align-items: center;
+}
+
+.dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: hsl(var(--muted-foreground));
+}
+
+.breakLine {
+    border-bottom: 1px solid hsl(var(--border));
+    margin: 20px 0;
+    margin: 1rem;
+}
+
+.divider {
+    margin: 10px 0;
+    border-bottom: 1px solid hsl(var(--border));
+}
+.divider-white {
+    margin: 10px 0;
+    border-bottom: 1px solid hsl(var(--foreground));
+}
+.space-5 {
+    margin: 5px 0;
+}
+.space {
+    margin: 20px 0;
+}
+
+.overflowAuto {
+    overflow: auto;
+}
+
+code {
+    white-space: break-spaces;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.popup-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100000;
+    visibility: hidden;
+    opacity: 0;
+    transition:
+        opacity 0.3s ease,
+        visibility 0.3s ease;
+}
+
+.popup-container {
+    background-color: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    color: hsl(var(--card-foreground));
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 750px;
+    height: 70%;
+    max-height: 500px;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.popup-wrapper.active-popup {
+    visibility: visible;
+    opacity: 1;
+}
+
+.popup-wrapper.active-popup .popup-container {
+    transform: scale(1);
+}
+
+/* LIST  */
+ul.custom-dot-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+ul.custom-dot-list li {
+    position: relative;
+    padding-left: 10px;
+}
+
+ul.custom-dot-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2em;
+    color: hsl(var(--foreground));
+}
+.cite-link {
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    line-height: 1.5rem;
+    border-radius: 50%;
+    background-color: hsl(var(--primary)) !important;
+    color: hsl(var(--primary-foreground)) !important;
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.6rem;
+    border: 1px solid hsl(var(--border));
+    text-decoration: none !important;
+}
+
+/* cost analytic */
+
+/* Ensure the chart container has proper dimensions */
+.chart-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .chart-container {
+        min-height: 280px;
+    }
+}
+
+/* cost analytics */
+/* Smooth transitions for theme changes */
+:deep(.echarts-tooltip) {
+    transition: all 0.3s ease;
+}
+
+* {
+    transition:
+        color 0.2s ease,
+        background-color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+/* iOS Safari specific fixes */
+@supports (-webkit-touch-callout: none) {
+    /* Prevent zoom on input focus */
+    input,
+    textarea,
+    select {
+        font-size: 16px !important;
+    }
+
+    /* Ensure proper viewport handling */
+    html,
+    body {
+        -webkit-text-size-adjust: 100%;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Fix for iOS Safari input positioning */
+    input:focus,
+    textarea:focus {
+        -webkit-appearance: none;
+        border-radius: 0;
+    }
+}
+
+/* Mobile-specific improvements for chat scrolling */
+@media (max-width: 768px) {
+    .chat-container {
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
+    }
+
+    /* Prevent horizontal scrolling on mobile */
+    body {
+        overflow-x: hidden;
+    }
+
+    /* Improve touch scrolling */
+    * {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Ensure inputs are always visible on mobile */
+    input,
+    textarea {
+        position: relative;
+        z-index: 1;
+    }
+}
+
+/* Tailwind v4 keyframes */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes blur-fade-in {
+    from {
+        opacity: 0;
+        filter: blur(4px);
+    }
+    to {
+        opacity: 1;
+        filter: blur(0);
+    }
+}
+
+/* Global animation utility for streaming markdown fade-in */
+@layer utilities {
+    .animate-blur-fade-in {
+        animation-name: blur-fade-in;
+        animation-duration: 200ms;
+        animation-timing-function: ease-out;
+        animation-fill-mode: forwards;
+        will-change: filter, opacity;
+    }
+
+    .form-wrapper {
+        margin-inline: auto;
+        width: 100%;
+    }
+
+    .control-responsive {
+        width: 100%;
+        max-width: none;
+        margin-inline: auto;
+    }
+
+    .social-center { display: flex; justify-content: center; }
+    
+    .social-btn { width: 100%; max-width: 25rem; }
+
+    .field-narrow { width: 15.5rem; }
+
+    .field-narrow-signup { width: 17.5rem; }
+
+    .field-tall { height: 2.5rem; }
+
+    .form-narrow { width: 22rem; }
+
+    .form-narrow-signup { width: 25rem; }
+
+    .field-dropdown { width: 12rem; }
+
+    .field-dropdown-height { height: 2.5rem; }
+
+    .button-md { width: 8rem; height: 2rem; justify-content: center; text-align: center;}
+
+    .icons-md { width: 1.3rem; height: 1.3rem;}
+
+    .sort-button-md { padding-inline: 0.25rem; padding-block: 0.25rem; gap: 0.25rem; justify-content: center; text-align: center;}
+
+    .info-button-md { padding: 0.5rem; gap: 0.25rem; justify-content: center; text-align: center;}
+
+    .info-button-sm { padding: 0.4rem; gap: 0.25rem; justify-content: center; text-align: center;}
+
+    .view-switch-md { gap: 0.5rem; padding-inline: 0.5rem; padding-block: 0.25rem;}
+
+    @media (hover: hover) and (pointer: fine) {
+        .button-md:hover,
+        .sort-button-md:hover,
+        .info-button-md:hover,
+        .info-button-sm:hover,
+        .view-switch-md:hover
+        { cursor: pointer; }
+    }
+    
+}
+
+@media (max-width: 639px) {
+  .button-md {
+    width: 4rem;            /* narrower on small screens */
+    padding-inline: 0.25rem;/* optional: tighter padding */
+    gap: 0.25rem;           /* optional: smaller gap */
+  }
+}
+
+@layer utilities {
+  /* Global AI dropdown width token */
+  :root {
+    --ai-dropdown-width: 14rem;      /* default */
+    --ai-dropdown-width-sm: 12rem;   /* small screens override */
+    --ai-dropdown-width-md: 14rem;   /* small screens override */
+    --ai-dropdown-width-lg: 16rem;   /* small screens override */
+  }
+
+  /* Apply a consistent inline size and prevent shrink/expand jitter */
+  .ai-dropdown {
+    inline-size: var(--ai-dropdown-width);
+    min-inline-size: var(--ai-dropdown-width);
+    max-inline-size: var(--ai-dropdown-width);
+  }
+
+  .ai-dropdown--sm {
+    inline-size: var(--ai-dropdown-width-sm);
+    min-inline-size: var(--ai-dropdown-width-sm);
+    max-inline-size: var(--ai-dropdown-width-sm);
+  }
+
+  .ai-dropdown--md {
+    inline-size: var(--ai-dropdown-width-md);
+    min-inline-size: var(--ai-dropdown-width-md);
+    max-inline-size: var(--ai-dropdown-width-md);
+  }
+
+  .ai-dropdown--lg {
+    inline-size: var(--ai-dropdown-width-lg);
+    min-inline-size: var(--ai-dropdown-width-lg);
+    max-inline-size: var(--ai-dropdown-width-lg);
+  }
+
+  /* Mobile: tighten slightly so it fits nicer with paddings */
+  @media (max-width: 640px) {
+    .ai-dropdown {
+      inline-size: var(--ai-dropdown-width-sm);
+      min-inline-size: var(--ai-dropdown-width-sm);
+      max-inline-size: var(--ai-dropdown-width-sm);
+      max-width: calc(100vw - 2rem); /* still guard against viewport overflow */
+    }
+  }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+@keyframes moveRight {
+    0% {
+        background-position: -20% 0;
+    }
+    100% {
+        background-position: 120% 0;
+    }
+}
+
+@keyframes progress {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(400%);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Custom faded scrollbar styles */
+::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 1rem;
+    background: transparent;
+    border: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 1rem;
+    background: transparent;
+    border: 1px solid transparent;
+    transition:
+        background-color 0.3s ease,
+        opacity 0.3s ease;
+}
+
+/* Show scrollbar on hover or when scrolling */
+*:hover::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb-color);
+}
+
+*:hover::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover-color);
+}
+
+*:hover::-webkit-scrollbar-thumb:active {
+    background: var(--scrollbar-thumb-active-color);
+}
+
+/* Hide scrollbar corner */
+::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+/* Show scrollbar when actively scrolling */
+.scrolling::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb-color);
+}
+
+/* Alternative approach using opacity for containers */
+.scrollbar-fade {
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+    transition: scrollbar-color 0.3s ease;
+}
+
+.scrollbar-fade:hover {
+    scrollbar-color: var(--scrollbar-thumb-color) transparent;
+}
+
+.scrollbar-fade.scrolling {
+    scrollbar-color: var(--scrollbar-thumb-color) transparent;
+}
+
+/* Utility classes for different fade intensities */
+.scrollbar-fade-light {
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+    transition: scrollbar-color 0.3s ease;
+}
+
+.scrollbar-fade-light:hover {
+    scrollbar-color: var(--scrollbar-thumb-color) transparent;
+}
+
+.scrollbar-fade-light.scrolling {
+    scrollbar-color: var(--scrollbar-thumb-color) transparent;
+}
+
+.scrollbar-fade-strong {
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+    transition: scrollbar-color 0.3s ease;
+}
+
+.scrollbar-fade-strong:hover {
+    scrollbar-color: var(--scrollbar-thumb-hover-color) transparent;
+}
+
+.scrollbar-fade-strong.scrolling {
+    scrollbar-color: var(--scrollbar-thumb-active-color) transparent;
+}
+
+/* For webkit browsers with different intensities */
+.scrollbar-fade-light::-webkit-scrollbar-thumb {
+    background: transparent;
+}
+
+.scrollbar-fade-light:hover::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb-color);
+}
+
+.scrollbar-fade-light.scrolling::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb-color);
+}
+
+.scrollbar-fade-strong::-webkit-scrollbar-thumb {
+    background: transparent;
+}
+
+.scrollbar-fade-strong:hover::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb-hover-color);
+}
+
+.scrollbar-fade-strong.scrolling::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb-active-color);
+}

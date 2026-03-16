@@ -1,0 +1,59 @@
+name: Staging Deployment to Firebase
+
+on:
+    push:
+        branches:
+            - staging
+
+jobs:
+    firebase-deployment:
+        runs-on: ubuntu-latest
+        environment: staging
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v2
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v2
+              with:
+                  node-version: "20"
+
+            - name: Install Dependencies
+              run: npm install
+
+            - name: Install Firebase Tools
+              run: npm install -g firebase-tools
+
+            - name: Set Environment Specific Variables and Secrets
+              env:
+                  SERVER_API_URL: ${{ secrets.SERVER_API_URL }}
+                  SERVER_API_KEY: ${{ secrets.SERVER_API_KEY  }}
+                  RAG_API_URL: ${{ secrets.RAG_API_URL }}
+                  RAG_LOCAL_API_URL: ${{ secrets.RAG_LOCAL_API_URL }}
+                  CLIENT_URL: ${{ secrets.CLIENT_URL }}
+                  RAG_ENV: ${{ secrets.RAG_ENV }}
+                  RAG_SERVICE_URL: ${{ secrets.RAG_SERVICE_URL }}
+                  GOOGLE_AUTH_CLIENT_ID: ${{ secrets.GOOGLE_AUTH_CLIENT_ID }}
+                  PLATFORM: ${{ secrets.PLATFORM }}
+                  ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
+                  GOOGLE_DEVELOPER_KEY: ${{ secrets.GOOGLE_DEVELOPER_KEY }}
+              run: |
+                  echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}' > firebaseKeys.json
+                  npm run build
+
+            - name: Prepare Server for Deployment
+              run: |
+                  cd .output/server
+                  rm -rf node_modules
+                  npm install
+                  cd ..
+
+            - name: Use Environment Specific Firebase Config
+              run: cp firebase.staging.json firebase.json
+
+            - name: Build and Deploy to Firebase
+              run: |
+                  echo "Deploying to Firebase with project ID: ${{ secrets.FIREBASE_PROJECT_ID }}"
+                  export GOOGLE_APPLICATION_CREDENTIALS=firebaseKeys.json
+                  firebase use staging
+                  npx firebase deploy --project "${{ secrets.FIREBASE_PROJECT_ID }}" --force

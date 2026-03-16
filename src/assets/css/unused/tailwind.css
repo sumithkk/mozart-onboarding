@@ -1,0 +1,74 @@
+/* tailwind.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        /* Static  */
+        --sideBarWidth: 260px;
+        --headerHeight: 60px;
+        --logoColor: #2844a4;
+        --primaryColor: #ffffff;
+        --greyBlack: #292d32;
+        --red: #ef4444;
+        --red2: #802a2c;
+        --green: #00b366;
+
+        /* Light Theme */
+        --headerBackgroundColor: #ffffff;
+        --headerBackgroundLAColor: #004f8a;
+        --headerTextColor: #ffffff;
+        --sideBarBackgroundColor: #ffffff;
+        --sideBarTextColor: #292d32;
+        --backgroundColor: #f2f2f2;
+        --unselectedColor: #838383;
+        --strokeColor: #cacaca;
+        --strokeColor2: #bdbdbd;
+        --strokeColorLA: #3d67f9;
+        --midGrey: #d8d8d8;
+        --linkColor: #2844a4;
+        --itemColor: #cdcdcd;
+        --gray: #ececec;
+        --gray2: #5e5e5e;
+        --qqq: #444444;
+        --highlightColor: #3d67f9;
+        --navHeaderActive: #292d32;
+        --uploadedFileColor: #eaecf6;
+        --surfaceColor: #f6f6f6;
+        --placeholderColor: #c4c4c4;
+        --borderColor: #e4e4e4;
+        --textColor: #0d0d0d;
+        --textColorSecondary: #5e5e5e;
+        --sideBarBackgroundColorDark: #ededed;
+    }
+
+    [data-theme="dark"] {
+        /* Dark Theme */
+        --headerBackgroundColor: #2c2c2c;
+        --headerBackgroundLAColor: #2c2c2c;
+        --headerTextColor: #ffffff;
+        --sideBarBackgroundColor: #2c2c2c;
+        --sideBarTextColor: #ffffff;
+        --backgroundColor: #191919;
+        --unselectedColor: #838383;
+        --strokeColor: #383838;
+        --strokeColor2: #525252;
+        --strokeColorLA: #383838;
+        --midGrey: #2d2d2d;
+        --linkColor: #ffffff;
+        --itemColor: #464646;
+        --gray: #212121;
+        --gray2: #5e5e5e;
+        --qqq: #444444;
+        --highlightColor: #ffff00;
+        --navHeaderActive: #ffffff;
+        --uploadedFileColor: #383838;
+        --surfaceColor: #1a1a1a;
+        --placeholderColor: #6b6b6b;
+        --borderColor: #2e2e2e;
+        --textColor: #ffffff;
+        --textColorSecondary: #b3b3b3;
+        --sideBarBackgroundColorDark: #141414;
+    }
+}

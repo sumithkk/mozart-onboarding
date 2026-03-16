@@ -1,0 +1,175 @@
+.tw-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.tw-input-group {
+    display: flex;
+    box-sizing: border-box;
+    gap: 10px;
+}
+.tw-input-one {
+    width: 100%;
+}
+
+.tw-input-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: var(--textColor);
+}
+.tw-input-error-label {
+    color: var(--red);
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.tw-input {
+    padding: 0.75rem 1rem;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid var(--strokeColor);
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--textColor);
+    background-color: var(--backgroundColor);
+}
+
+.tw-input:focus {
+    border-color: var(--logoColor);
+    outline: none;
+    box-shadow: 0 0 0 1px var(--logoColor);
+}
+
+.tw-input:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+.tw-button {
+    padding: 0.7rem 1.5rem;
+    font-weight: 500;
+    letter-spacing: 0.025em;
+    color: #ffffff;
+    text-transform: capitalize;
+    background-color: var(--logoColor);
+    border-radius: 0.5rem;
+    transition:
+        background-color 0.3s ease,
+        transform 0.3s ease;
+    outline: none;
+    border: none;
+}
+
+.tw-button:hover {
+    background-color: #3b82f6;
+}
+
+.tw-button:focus {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+    outline: none;
+}
+/* ------------------------------------| Input password group |---------------------------------------- */
+.tw-password-group {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.tw-password-toggle {
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    color: var(--textColor);
+    transition: color 0.3s ease;
+    font-size: 1.25rem; /* Adjust size as needed */
+}
+
+.tw-password-toggle:hover {
+    color: var(--textColor);
+}
+
+/* ----------------------------------------| Input number group |---------------------------------------- */
+.tw-number-input-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 5px 5px 10px;
+    background-color: var(--backgroundColor); /* Matching your form background */
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+    border: 1px solid var(--strokeColor);
+}
+
+.tw-input-number-container {
+    flex-grow: 1;
+}
+
+.tw-number-input {
+    -moz-appearance: textfield; /* Remove spinner in Firefox */
+    border: none !important;
+    padding: 5px;
+}
+.tw-number-input:focus {
+    outline: none;
+    border: none !important;
+    box-shadow: none;
+}
+
+.tw-number-input::-webkit-inner-spin-button,
+.tw-number-input::-webkit-outer-spin-button {
+    appearance: none;
+    margin: 0;
+}
+
+.tw-number-buttons {
+    display: flex;
+    gap: 5px;
+}
+
+.tw-number-button {
+    width: 22px;
+    height: 22px;
+    padding: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--strokeColor);
+    background-color: var(--backgroundColor);
+    border-radius: 0.5rem;
+    transition: background-color 0.3s ease;
+}
+
+.tw-number-button:hover {
+    background-color: var(--strokeColor); /* Hover effect */
+}
+
+.tw-number-button:focus {
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+    outline: none;
+}
+
+.tw-number-button svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--textColor);
+}
+
+@media screen and (max-width: 767px) {
+    .tw-input-group {
+        flex-direction: column;
+    }
+}
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    /* Styles for tablet devices */
+}
+@media screen and (min-width: 1025px) {
+    /* Styles for desktop devices */
+}
