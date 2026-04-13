@@ -14,7 +14,13 @@
                 <!-- User Account Settings -->
                 <div class="space-y-1">
                     <span class="text-xs font-semibold text-gray-600 uppercase dark:text-neutral-400">ACCOUNT</span>
-                    <NuxtLink v-for="item in userProfileNavItems" :key="item.route" :to="item.route" :class="[baseNavItem, $route.path === item.route ? 'bg-gray-100 text-black dark:bg-neutral-800 dark:text-white' : 'hover:bg-gray-100 dark:hover:bg-neutral-800']">
+                    <NuxtLink
+                        v-for="item in userProfileNavItems"
+                        :key="item.route"
+                        :to="item.route"
+                        :data-tour="item.route === '/profile/preferences' ? 'preferences' : undefined"
+                        :class="[baseNavItem, $route.path === item.route ? 'bg-gray-100 text-black dark:bg-neutral-800 dark:text-white' : 'hover:bg-gray-100 dark:hover:bg-neutral-800']"
+                    >
                         <component :is="profileIcons[item.icon as keyof typeof profileIcons]" class="h-5 w-5 shrink-0" />
                         <span class="truncate">{{ item.label }}</span>
                     </NuxtLink>

@@ -44,6 +44,7 @@
 
         <!-- Conversation Switch Loading Indicator -->
         <ConversationSwitchIndicator />
+        <OnboardingTour />
     </div>
 </template>
 
@@ -51,6 +52,7 @@
     import { ref, computed, watch, onMounted, onBeforeUnmount, provide } from "vue"
     import { useModal } from "~/composables/useConfirmationModel"
     import ConversationSwitchIndicator from "~/components/ui/ConversationSwitchIndicator.vue"
+    import OnboardingTour from "~/components/onboarding/OnboardingTour.vue"
 
     const route = useRoute()
     const ragStore = useRagStore()

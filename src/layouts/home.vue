@@ -28,10 +28,12 @@
         <div class="flex h-[calc(100%-var(--headerHeight))] flex-row overflow-y-scroll">
             <slot></slot>
         </div>
+        <OnboardingTour />
     </div>
 </template>
 
 <script setup lang="ts">
+    import OnboardingTour from '@/components/onboarding/OnboardingTour.vue'
     const router = useRouter()
 
     function goToLogin() {

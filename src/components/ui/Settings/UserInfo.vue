@@ -1,32 +1,61 @@
 <template>
-    <div class="m-12 flex flex-col-reverse justify-between gap-6 sm:flex-row sm:gap-20">
-        <div class="w-full sm:w-2/3">
-            <!-- Personal Information Box -->
-            <div class="rounded-lg bg-sideBarBackgroundColor px-8 py-10 pt-8 shadow-sm">
-                <!-- Form header Buttons -->
-                <FormHeader :title="'Personal Information'" :handleAction="handleSaveButtonClick"
-                    :loaderStatus="loaderStatus" :buttonText="'Save Profile'" />
+    <div class="m-12">
+        <div class="inline-grid max-w-full grid-cols-1 items-start gap-6 sm:grid-cols-[minmax(0,42rem)_13rem] sm:gap-20">
+            <div data-tour="user-profile" class="inline-grid max-w-full grid-cols-1 items-start gap-6 sm:grid-cols-[minmax(0,42rem)_13rem] sm:gap-20">
+                <div class="w-full max-w-2xl">
+                <!-- Personal Information Box -->
+                    <div class="rounded-lg bg-sideBarBackgroundColor px-8 py-10 pt-8 shadow-sm">
+                        <!-- Form header Buttons -->
+                        <FormHeader :title="'Personal Information'" :handleAction="handleSaveButtonClick"
+                            :loaderStatus="loaderStatus" :buttonText="'Save Profile'" />
 
-                <div class="flex flex-col gap-4">
-                    <!-- First Name -->
-                    <div class="flex items-center">
-                        <SimpleInputV2 type="text" label="First Name" :defaultValue="firstName" v-model="firstName"
-                            placeholderValue="Enter your first name"
-                            inputInfo="Your display name for shared chats and user management." />
+                        <div class="flex flex-col gap-4">
+                            <!-- First Name -->
+                            <div class="flex items-center">
+                                <SimpleInputV2 type="text" label="First Name" :defaultValue="firstName" v-model="firstName"
+                                    placeholderValue="Enter your first name"
+                                    inputInfo="Your display name for shared chats and user management." />
+                            </div>
+
+                            <!-- Last Name -->
+                            <div class="flex items-center">
+                                <SimpleInputV2 type="text" label="Last Name" :defaultValue="lastName" v-model="lastName"
+                                    placeholderValue="Enter your last name" />
+                            </div>
+                        </div>
                     </div>
+                </div>
 
-                    <!-- Last Name -->
-                    <div class="flex items-center">
-                        <SimpleInputV2 type="text" label="Last Name" :defaultValue="lastName" v-model="lastName"
-                            placeholderValue="Enter your last name" />
+                <div class="flex w-[13rem] shrink-0 flex-col items-center space-y-2 sm:items-start">
+                    <!-- Profile Picture Label (Hidden on Small Screens) -->
+                    <p class="text-textColor m-0 hidden text-base font-[700] sm:block">Profile Picture</p>
+
+                    <div class="relative mt-2 flex h-52 w-52 items-center justify-center">
+                        <div
+                            class="flex h-full w-full items-center justify-center rounded-full border-2 border-profileBorderColor">
+                            <!-- Profile Image Placeholder -->
+                            <img v-if="profilePicture" :src="profilePicture" alt="Profile"
+                                class="h-full w-full rounded-full object-cover" />
+                        </div>
+
+                        <!-- Edit Button -->
+                        <button @click="triggerChangeProfileInput"
+                            class="absolute bottom-[0.7rem] left-[23%] flex -translate-x-1/2 transform items-center space-x-1 rounded-full bg-logoColor px-3 py-1 text-sm text-white shadow-md hover:bg-indigo-700">
+                            <input type="file" ref="fileInput" @change="handleProfileChange" style="display: none" />
+                            <LucidePencil class="h-4 w-4" />
+                            <span>Edit</span>
+                        </button>
+
+                        <!-- Hidden File Input -->
+                        <input type="file" ref="fileInput" accept="image/*" @change="handleProfileChange" class="hidden" />
                     </div>
-
-
                 </div>
             </div>
+        </div>
 
+        <div class="mt-6 w-full sm:w-2/3">
             <!-- Account Security Box -->
-            <div class="rounded-lg bg-sideBarBackgroundColor px-8 py-10 pt-8 shadow-sm mt-6">
+            <div class="rounded-lg bg-sideBarBackgroundColor px-8 py-10 pt-8 shadow-sm">
                 <h3 class="text-lg font-semibold text-textColor mb-6">Account Security</h3>
 
                 <div class="flex flex-col gap-6">
@@ -139,31 +168,6 @@
                         </button>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="mx-auto flex w-full flex-col items-center space-y-2 sm:w-1/2 sm:items-start">
-            <!-- Profile Picture Label (Hidden on Small Screens) -->
-            <p class="text-textColor m-0 hidden text-base font-[700] sm:block">Profile Picture</p>
-
-            <div class="relative flex h-52 w-52 items-center justify-center mt-2">
-                <div
-                    class="flex h-full w-full items-center justify-center rounded-full border-2 border-profileBorderColor">
-                    <!-- Profile Image Placeholder -->
-                    <img v-if="profilePicture" :src="profilePicture" alt="Profile"
-                        class="h-full w-full rounded-full object-cover" />
-                </div>
-
-                <!-- Edit Button -->
-                <button @click="triggerChangeProfileInput"
-                    class="absolute bottom-[0.7rem] left-[23%] flex -translate-x-1/2 transform items-center space-x-1 rounded-full bg-logoColor px-3 py-1 text-sm text-white shadow-md hover:bg-indigo-700">
-                    <input type="file" ref="fileInput" @change="handleProfileChange" style="display: none" />
-                    <LucidePencil class="h-4 w-4" />
-                    <span>Edit</span>
-                </button>
-
-                <!-- Hidden File Input -->
-                <input type="file" ref="fileInput" accept="image/*" @change="handleProfileChange" class="hidden" />
             </div>
         </div>
     </div>

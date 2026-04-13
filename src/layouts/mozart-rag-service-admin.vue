@@ -81,6 +81,7 @@
             @update:show="handleUpdateShow"
             @buttonClick="handleButtonClick"
         />
+        <OnboardingTour />
     </div>
 </template>
 
@@ -88,6 +89,7 @@
     import { ref, computed, onMounted, provide, watch } from "vue"
     import { useModal } from "~/composables/useConfirmationModel"
     import { useResponsiveSidebarWithDefaults } from "~/composables/useResponsiveSidebar"
+    import OnboardingTour from "~/components/onboarding/OnboardingTour.vue"
 
     const route = useRoute()
     const router = useRouter()

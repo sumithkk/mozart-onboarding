@@ -59,7 +59,7 @@
     <div class="">
 
         <!-- Sort Menu -->
-        <div class="flex items-center px-5 py-3 w-full justify-center md:justify-start space-x-2 sm:space-x-2 min-[428px]:space-x-4 max-[390px]:mx-auto max-[390px]:w-fit max-[390px]:justify-center max-[390px]:gap-1 max-[390px]:space-x-1 max-[390px]:px-2 max-[390px]:[&>div]:shrink-0">
+        <div data-tour="upload-area" class="flex items-center px-5 py-3 w-full justify-center md:justify-start space-x-2 sm:space-x-2 min-[428px]:space-x-4 max-[390px]:mx-auto max-[390px]:w-fit max-[390px]:justify-center max-[390px]:gap-1 max-[390px]:space-x-1 max-[390px]:px-2 max-[390px]:[&>div]:shrink-0">
             <!-- Wrap each item in a flex-1 container -->
             <!-- <div class="flex justify-center">
                 <Capture />
@@ -111,6 +111,16 @@
                         </MenuItems>
                     </Menu>
                     <template #popper>Upload Files</template>
+                </VTooltip>
+            </div>
+
+            <div class="flex justify-center">
+                <VTooltip>
+                    <button data-tour="create-folder" class="button-md border-border bg-white text-logoColor flex items-center gap-2 rounded-md px-2 py-1 text-sm whitespace-nowrap hover:bg-neutral-200 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-700" @click="$emit('createFolder')" title="Create Folder">
+                        <FolderPlusIcon class="icons-md" />
+                        <span v-if="!isSmallScreen">Create Folder</span>
+                    </button>
+                    <template #popper>Create Folder</template>
                 </VTooltip>
             </div>
 

@@ -1,7 +1,7 @@
 <template>
     <div class="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
         <!-- Header -->
-        <div class="mb-8">
+        <div data-tour="preferences" class="mb-8">
             <h1 class="text-textColor text-3xl font-bold">Appearance</h1>
             <p class="text-textColorSecondary mt-2 text-sm">Manage settings for your booking appearance</p>
         </div>

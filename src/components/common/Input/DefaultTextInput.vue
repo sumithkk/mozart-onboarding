@@ -1,6 +1,6 @@
 <template>
     <div class="relative flex flex-col gap-[10px]">
-        <div class="border-borderColor relative flex min-h-[8rem] w-[40rem] flex-col justify-between rounded-[14px] border-[1.5px] px-4 pt-4 pb-2 transition-all duration-200" :class="{ 'border-borderColor border-[1px]': inputFocus }" @dragover.prevent @drop.prevent="handleFileDrop" @paste="handleFilePaste">
+        <div data-tour="chat-input" class="border-borderColor relative flex min-h-[8rem] w-[40rem] flex-col justify-between rounded-[14px] border-[1.5px] px-4 pt-4 pb-2 transition-all duration-200" :class="{ 'border-borderColor border-[1px]': inputFocus }" @dragover.prevent @drop.prevent="handleFileDrop" @paste="handleFilePaste">
             <!-- Document Attachment -->
             <div class="absolute flex bottom-full mb-2 left-0 md:bottom-auto md:top-[285px]">
                 <DocumentAttachment v-if="showDocumentAttachmentPopover" class="relative left-2 md:-top-80 md:left-4" @uploadFromComputer="handleUploadFromComputer" @uploadFromGoogleDrive="openGoogleFilePicker" />
@@ -165,7 +165,7 @@
 
                 <!-- Right icons -->
                 <div class="flex items-center gap-[10px]">
-                    <Menu as="div" class="relative">
+                    <Menu as="div" class="relative" data-tour="model-selector">
                         <MenuButton class="border-borderColor text-textColor flex items-center gap-1 rounded-lg border px-2 py-1 text-sm" v-slot="{ open }">
                             <div class="flex items-center gap-1 px-1 py-1">
                                 <svg width="18" height="10" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg" class="stroke-textColor">

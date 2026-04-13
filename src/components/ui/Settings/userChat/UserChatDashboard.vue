@@ -34,7 +34,7 @@
         </div>
     </div>
     <div class="flex flex-col gap-6 p-4">
-        <div class="flex flex-col gap-4 md:flex-row">
+        <div data-tour="token-usage" class="flex flex-col gap-4 md:flex-row">
             <TokenCoastHeader class="w-full" :selectedFilters="selectedFilters" />
         </div>
         <div class="flex flex-col gap-4 md:flex-row">
@@ -45,7 +45,7 @@
 
         <!-- Weekly Usage Section -->
         <div class="flex flex-col gap-4 md:flex-row">
-            <PeriodicTokenCost class="w-full md:w-1/2" :selectedFilters="selectedFilters" />
+            <PeriodicTokenCost data-tour="cost-analysis" class="w-full md:w-1/2" :selectedFilters="selectedFilters" />
             <PeriodicTokenUsed class="w-full md:w-1/2" :selectedFilters="selectedFilters" />
         </div>
 

@@ -12,7 +12,7 @@
 
         <!-- Integrations List -->
         <div v-else class="flex flex-row items-center justify-center flex-wrap gap-3">
-            <div v-for="integration in integrations.integrations" :key="integration.name" class="border-strokeColor mt-2 w-[400px] max-w-[400px] rounded-[8px] border p-5 text-left shadow-[0_4px_8px_rgba(0,0,0,0.1)]">
+            <div v-for="integration in integrations.integrations" :key="integration.name" :data-tour="integration.id === 'google' ? 'google-drive' : undefined" class="border-strokeColor mt-2 w-[400px] max-w-[400px] rounded-[8px] border p-5 text-left shadow-[0_4px_8px_rgba(0,0,0,0.1)]">
                 <div class="mb-1 flex items-center justify-between">
                     <div class="text-lg font-bold">{{ integration.name }}</div>
                     <div v-if="integration.isMCP" class="rounded bg-blue-100 px-2 py-0.5 text-xs font-semibold text-blue-800 dark:bg-blue-200 dark:text-blue-800">MCP</div>
