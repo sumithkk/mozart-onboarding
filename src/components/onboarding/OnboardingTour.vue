@@ -41,6 +41,7 @@ const shouldAutoStartPageTour = computed(() => {
   if (showWelcomeModal.value) return false
   if (tourStore.isTourActive) return false
   if (tourStore.isFlowActive) return false
+  if (tourStore.hasSkippedTour) return false // 🔥 KEY FIX
 
   return !tourStore.pageTours[routePage.value]
 })
@@ -162,8 +163,15 @@ function prevStep() {
 }
 
 // ❌ skip
+// function skipTour() {
+//   tourStore.hasSeenWelcomeModal = true
+//   showWelcomeModal.value = false
+//   tourStore.endTour()
+// }
+
 function skipTour() {
   tourStore.hasSeenWelcomeModal = true
+  tourStore.hasSkippedTour = true // 🔥 IMPORTANT
   showWelcomeModal.value = false
   tourStore.endTour()
 }

@@ -35,6 +35,7 @@ export const useTourStore = defineStore('tour', {
     isTourActive: false,
     isFlowActive: false,
     flowIndex: 0,
+    hasSkippedTour: false,
 
     // per-page completion
     pageTours: {

@@ -1,7 +1,7 @@
 <template>
     <div class="m-12">
-        <div class="inline-grid max-w-full grid-cols-1 items-start gap-6 sm:grid-cols-[minmax(0,42rem)_13rem] sm:gap-20">
-            <div data-tour="user-profile" class="inline-grid max-w-full grid-cols-1 items-start gap-6 sm:grid-cols-[minmax(0,42rem)_13rem] sm:gap-20">
+        <div data-tour="user-profile" class="inline-grid max-w-full grid-cols-1 items-start gap-6 sm:grid-cols-[minmax(0,42rem)_13rem] sm:gap-20">
+            <div class="inline-grid max-w-full grid-cols-1 items-start gap-6 sm:grid-cols-[minmax(0,42rem)_13rem] sm:gap-20">
                 <div class="w-full max-w-2xl">
                 <!-- Personal Information Box -->
                     <div class="rounded-lg bg-sideBarBackgroundColor px-8 py-10 pt-8 shadow-sm">
